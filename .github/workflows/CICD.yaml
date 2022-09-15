@@ -33,7 +33,7 @@ jobs:
       - name: Step 6 Build the app
         run: npm run build
       - name: step 7 upload build artifacts
-        uses: actions/upload-artifacts@v1
+        uses: actions/upload-artifact@v1
         if: github.event_name == 'push'
         with:
           path: build
