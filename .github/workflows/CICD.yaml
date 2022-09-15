@@ -32,7 +32,13 @@ jobs:
         run: echo "test passed"
       - name: Step 6 Build the app
         run: npm run build
-      - name: Step 7 Deploy to dev
+      - name: step 7 upload build artifacts
+        uses: actions/upload-artifacts@v1
+        if: github.event_name == 'push'
+        with:
+          path: build
+          name: build
+      - name: Step 8 Deploy to dev
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain http://unarmed-house1112.surge.sh
         env:
