@@ -13,17 +13,17 @@ jobs:
     steps:
       - name: Step 1 Checkout the repo 
         uses: actions/checkout@v2
-      - name: Step 2 setup node environemnt
-        uses: actions/setup-node@v1
-        with:
-          node-version: "16.x"
-      - name: Step 3 adding cache for node modules
+      - name: Step 2 adding cache for node modules
         uses: actions/cache@v1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - name: Step 3 setup node environemnt
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
       - name: Step 4 install the dependencies
         run: npm ci
       - name: Step 5 code coverage
