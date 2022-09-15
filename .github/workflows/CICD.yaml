@@ -2,7 +2,11 @@ name: CICD
 on:
   pull_request:
     branches:
-      - main
+      - develop
+  push: 
+    branches:
+      - develop
+
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -19,3 +23,11 @@ jobs:
         env:
           CI: true
         run: npm run test -- --coverage
+      - name: Build the app
+        if: github.event_name == 'push'
+        run: npm run build
+      - name: Deploy to dev
+        run: npx surge --project ./build --domain http://unarmed-house1112.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
